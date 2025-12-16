@@ -1,0 +1,17 @@
+ui\ft\ccit\faculty\transaksi\barang\BarangService.class
+ui\ft\ccit\faculty\transaksi\jenisbarang\JenisBarangRepository.class
+ui\ft\ccit\faculty\transaksi\jenisbarang\JenisBarangController.class
+ui\ft\ccit\faculty\transaksi\pemasok\Pemasok.class
+ui\ft\ccit\faculty\transaksi\jenisbarang\JenisBarang.class
+ui\ft\ccit\faculty\transaksi\DataAlreadyExistsException.class
+ui\ft\ccit\faculty\transaksi\pemasok\PemasokRepository.class
+ui\ft\ccit\faculty\transaksi\TransaksiApplication.class
+ui\ft\ccit\faculty\transaksi\barang\Barang.class
+ui\ft\ccit\faculty\transaksi\barang\BarangNotFoundException.class
+ui\ft\ccit\faculty\transaksi\barang\BarangAlreadyExistsException.class
+ui\ft\ccit\faculty\transaksi\GlobalExceptionHandler.class
+ui\ft\ccit\faculty\transaksi\jenisbarang\JenisBarangService.class
+ui\ft\ccit\faculty\transaksi\GlobalExceptionHandler$ErrorResponse.class
+ui\ft\ccit\faculty\transaksi\barang\BarangRepository.class
+ui\ft\ccit\faculty\transaksi\barang\BarangController.class
+ui\ft\ccit\faculty\transaksi\DataNotFoundException.class

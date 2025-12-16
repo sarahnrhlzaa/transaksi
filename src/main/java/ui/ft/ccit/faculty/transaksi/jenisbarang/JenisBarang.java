@@ -18,6 +18,10 @@ public class JenisBarang {
         // untuk JPA
     }
 
+    public JenisBarang(String namaJenis) {
+    this.namaJenis = namaJenis;
+    }
+
     public JenisBarang(Byte idJenisBarang, String namaJenis) {
         this.idJenisBarang = idJenisBarang;
         this.namaJenis = namaJenis;
