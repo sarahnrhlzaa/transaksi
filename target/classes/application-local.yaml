@@ -1,0 +1,11 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/penjualan?useSSL=false&serverTimezone=Asia/Jakarta
+    username: root
+
+  jpa:
+    open-in-view: false
