@@ -1,0 +1,15 @@
+C:\Users\user\Documents\Sarah-kuliah\Tugas-Sarah-SMT3\transaksi\src\main\java\ui\ft\ccit\faculty\transaksi\barang\controller\BarangController.java
+C:\Users\user\Documents\Sarah-kuliah\Tugas-Sarah-SMT3\transaksi\src\main\java\ui\ft\ccit\faculty\transaksi\barang\model\Barang.java
+C:\Users\user\Documents\Sarah-kuliah\Tugas-Sarah-SMT3\transaksi\src\main\java\ui\ft\ccit\faculty\transaksi\barang\model\BarangRepository.java
+C:\Users\user\Documents\Sarah-kuliah\Tugas-Sarah-SMT3\transaksi\src\main\java\ui\ft\ccit\faculty\transaksi\barang\view\BarangAlreadyExistsException.java
+C:\Users\user\Documents\Sarah-kuliah\Tugas-Sarah-SMT3\transaksi\src\main\java\ui\ft\ccit\faculty\transaksi\barang\view\BarangNotFoundException.java
+C:\Users\user\Documents\Sarah-kuliah\Tugas-Sarah-SMT3\transaksi\src\main\java\ui\ft\ccit\faculty\transaksi\barang\view\BarangService.java
+C:\Users\user\Documents\Sarah-kuliah\Tugas-Sarah-SMT3\transaksi\src\main\java\ui\ft\ccit\faculty\transaksi\DataAlreadyExistsException.java
+C:\Users\user\Documents\Sarah-kuliah\Tugas-Sarah-SMT3\transaksi\src\main\java\ui\ft\ccit\faculty\transaksi\DataNotFoundException.java
+C:\Users\user\Documents\Sarah-kuliah\Tugas-Sarah-SMT3\transaksi\src\main\java\ui\ft\ccit\faculty\transaksi\GlobalExceptionHandler.java
+C:\Users\user\Documents\Sarah-kuliah\Tugas-Sarah-SMT3\transaksi\src\main\java\ui\ft\ccit\faculty\transaksi\jenisbarang\model\JenisBarang.java
+C:\Users\user\Documents\Sarah-kuliah\Tugas-Sarah-SMT3\transaksi\src\main\java\ui\ft\ccit\faculty\transaksi\jenisbarang\model\JenisBarangRepository.java
+C:\Users\user\Documents\Sarah-kuliah\Tugas-Sarah-SMT3\transaksi\src\main\java\ui\ft\ccit\faculty\transaksi\OpenApiConfig.java
+C:\Users\user\Documents\Sarah-kuliah\Tugas-Sarah-SMT3\transaksi\src\main\java\ui\ft\ccit\faculty\transaksi\pemasok\model\Pemasok.java
+C:\Users\user\Documents\Sarah-kuliah\Tugas-Sarah-SMT3\transaksi\src\main\java\ui\ft\ccit\faculty\transaksi\pemasok\model\PemasokRepository.java
+C:\Users\user\Documents\Sarah-kuliah\Tugas-Sarah-SMT3\transaksi\src\main\java\ui\ft\ccit\faculty\transaksi\TransaksiApplication.java
