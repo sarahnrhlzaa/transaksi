@@ -10,16 +10,16 @@ public class Pemasok {
     @Column(name = "id_pemasok", length = 4)
     private String idPemasok;
 
-    @Column(name = "nama", length = 255)
+    @Column(name = "nama", length = 20, nullable = false)
     private String namaPemasok;
 
-    @Column(name = "alamat", length = 255)
+    @Column(name = "alamat", length = 50, nullable = false)
     private String alamat;
 
-    @Column(name = "telepon", length = 255)
+    @Column(name = "telepon", length = 15, nullable = false)
     private String telepon;
 
-    @Column(name = "email", length = 255)
+    @Column(name = "email", length = 40)
     private String email;
 
     protected Pemasok() {

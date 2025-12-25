@@ -2,6 +2,7 @@ package ui.ft.ccit.faculty.transaksi.barang.view;
 
 import ui.ft.ccit.faculty.transaksi.DataAlreadyExistsException;
 import ui.ft.ccit.faculty.transaksi.DataNotFoundException;
+import ui.ft.ccit.faculty.transaksi.InvalidDataException;
 import ui.ft.ccit.faculty.transaksi.barang.model.Barang;
 import ui.ft.ccit.faculty.transaksi.barang.model.BarangRepository;
 
@@ -42,8 +43,42 @@ public class BarangService {
 
     // CREATE
     public Barang save(Barang barang) {
+        // Validasi idBarang
         if (barang.getIdBarang() == null || barang.getIdBarang().isBlank()) {
-            throw new IllegalArgumentException("idBarang wajib diisi");
+            throw new InvalidDataException("idBarang", null, "ID barang wajib diisi");
+        }
+
+        if (barang.getIdBarang().length() > 4) {
+            throw new InvalidDataException("idBarang", barang.getIdBarang(), "ID barang maksimal 4 karakter");
+        }
+
+        // Validasi nama
+        if (barang.getNama() == null || barang.getNama().isBlank()) {
+            throw new InvalidDataException("nama", null, "Nama barang wajib diisi");
+        }
+
+        if (barang.getNama().length() > 255) {
+            throw new InvalidDataException("nama", barang.getNama(), "Nama barang maksimal 255 karakter");
+        }
+
+        // Validasi stok
+        if (barang.getStok() != null && barang.getStok() < 0) {
+            throw new InvalidDataException("stok", barang.getStok(), "Stok tidak boleh negatif");
+        }
+
+        // Validasi harga
+        if (barang.getHarga() != null && barang.getHarga() < 0) {
+            throw new InvalidDataException("harga", barang.getHarga(), "Harga tidak boleh negatif");
+        }
+
+        // Validasi persenLaba
+        if (barang.getPersenLaba() != null && (barang.getPersenLaba() < 0 || barang.getPersenLaba() > 100)) {
+            throw new InvalidDataException("persenLaba", barang.getPersenLaba(), "Persentase laba harus antara 0-100");
+        }
+
+        // Validasi diskon
+        if (barang.getDiskon() != null && (barang.getDiskon() < 0 || barang.getDiskon() > 100)) {
+            throw new InvalidDataException("diskon", barang.getDiskon(), "Diskon harus antara 0-100");
         }
 
         if (barangRepository.existsById(barang.getIdBarang())) {
@@ -56,8 +91,42 @@ public class BarangService {
     @Transactional
     public List<Barang> saveBulk(List<Barang> barangList) {
         for (Barang barang : barangList) {
+            // Validasi idBarang
             if (barang.getIdBarang() == null || barang.getIdBarang().isBlank()) {
-                throw new IllegalArgumentException("idBarang wajib diisi untuk setiap barang");
+                throw new InvalidDataException("idBarang", null, "ID barang wajib diisi untuk setiap barang");
+            }
+
+            if (barang.getIdBarang().length() > 4) {
+                throw new InvalidDataException("idBarang", barang.getIdBarang(), "ID barang maksimal 4 karakter");
+            }
+
+            // Validasi nama
+            if (barang.getNama() == null || barang.getNama().isBlank()) {
+                throw new InvalidDataException("nama", null, "Nama barang wajib diisi untuk setiap barang");
+            }
+
+            if (barang.getNama().length() > 255) {
+                throw new InvalidDataException("nama", barang.getNama(), "Nama barang maksimal 255 karakter");
+            }
+
+            // Validasi stok
+            if (barang.getStok() != null && barang.getStok() < 0) {
+                throw new InvalidDataException("stok", barang.getStok(), "Stok tidak boleh negatif");
+            }
+
+            // Validasi harga
+            if (barang.getHarga() != null && barang.getHarga() < 0) {
+                throw new InvalidDataException("harga", barang.getHarga(), "Harga tidak boleh negatif");
+            }
+
+            // Validasi persenLaba
+            if (barang.getPersenLaba() != null && (barang.getPersenLaba() < 0 || barang.getPersenLaba() > 100)) {
+                throw new InvalidDataException("persenLaba", barang.getPersenLaba(), "Persentase laba harus antara 0-100");
+            }
+
+            // Validasi diskon
+            if (barang.getDiskon() != null && (barang.getDiskon() < 0 || barang.getDiskon() > 100)) {
+                throw new InvalidDataException("diskon", barang.getDiskon(), "Diskon harus antara 0-100");
             }
 
             if (barangRepository.existsById(barang.getIdBarang())) {
@@ -70,6 +139,35 @@ public class BarangService {
     // UPDATE
     public Barang update(String id, Barang updated) {
         Barang existing = getById(id); // akan lempar DataNotFoundException
+
+        // Validasi nama
+        if (updated.getNama() == null || updated.getNama().isBlank()) {
+            throw new InvalidDataException("nama", null, "Nama barang wajib diisi");
+        }
+
+        if (updated.getNama().length() > 255) {
+            throw new InvalidDataException("nama", updated.getNama(), "Nama barang maksimal 255 karakter");
+        }
+
+        // Validasi stok
+        if (updated.getStok() != null && updated.getStok() < 0) {
+            throw new InvalidDataException("stok", updated.getStok(), "Stok tidak boleh negatif");
+        }
+
+        // Validasi harga
+        if (updated.getHarga() != null && updated.getHarga() < 0) {
+            throw new InvalidDataException("harga", updated.getHarga(), "Harga tidak boleh negatif");
+        }
+
+        // Validasi persenLaba
+        if (updated.getPersenLaba() != null && (updated.getPersenLaba() < 0 || updated.getPersenLaba() > 100)) {
+            throw new InvalidDataException("persenLaba", updated.getPersenLaba(), "Persentase laba harus antara 0-100");
+        }
+
+        // Validasi diskon
+        if (updated.getDiskon() != null && (updated.getDiskon() < 0 || updated.getDiskon() > 100)) {
+            throw new InvalidDataException("diskon", updated.getDiskon(), "Diskon harus antara 0-100");
+        }
 
         existing.setNama(updated.getNama());
         existing.setStok(updated.getStok());

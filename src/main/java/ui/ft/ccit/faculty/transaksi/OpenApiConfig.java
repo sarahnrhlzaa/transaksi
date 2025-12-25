@@ -48,4 +48,82 @@ public class OpenApiConfig {
                                 .build();
         }
 
+        /*
+         * ======================================================
+         * GROUP: JENIS BARANG
+         * ======================================================
+         */
+        @Bean
+        public GroupedOpenApi jenisBarangApi() {
+                return GroupedOpenApi.builder()
+                                .group("Jenis Barang")
+                                .pathsToMatch("/api/jenis-barang/**")
+                                .build();
+        }
+
+        /*
+         * ======================================================
+         * GROUP: PEMASOK
+         * ======================================================
+         */
+        @Bean
+        public GroupedOpenApi pemasokApi() {
+                return GroupedOpenApi.builder()
+                                .group("Pemasok")
+                                .pathsToMatch("/api/pemasok/**")
+                                .build();
+        }
+
+        /*
+         * ======================================================
+         * GROUP: KARYAWAN
+         * ======================================================
+         */
+        @Bean
+        public GroupedOpenApi karyawanApi() {
+                return GroupedOpenApi.builder()
+                                .group("Karyawan")
+                                .pathsToMatch("/api/karyawan/**")
+                                .build();
+        }
+
+        /*
+         * ======================================================
+         * GROUP: PELANGGAN
+         * ======================================================
+         */
+        @Bean
+        public GroupedOpenApi pelangganApi() {
+                return GroupedOpenApi.builder()
+                                .group("Pelanggan")
+                                .pathsToMatch("/api/pelanggan/**")
+                                .build();
+        }
+
+        /*
+         * ======================================================
+         * GROUP: TRANSAKSI
+         * ======================================================
+         */
+        @Bean
+        public GroupedOpenApi transaksiApi() {
+                return GroupedOpenApi.builder()
+                                .group("Transaksi")
+                                .pathsToMatch("/api/transaksi/**")
+                                .build();
+        }
+
+        /*
+         * ======================================================
+         * GROUP: DETAIL TRANSAKSI
+         * ======================================================
+         */
+        @Bean
+        public GroupedOpenApi detailTransaksiApi() {
+                return GroupedOpenApi.builder()
+                                .group("Detail Transaksi")
+                                .pathsToMatch("/api/detail-transaksi/**")
+                                .build();
+        }
+
 }
