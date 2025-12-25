@@ -31,6 +31,16 @@ public class GlobalExceptionHandler {
                 ex.getIdValue());
     }
 
+    @ExceptionHandler(InvalidDataException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST) // 400
+    public ErrorResponse handleInvalidData(InvalidDataException ex) {
+        return new ErrorResponse(
+                "INVALID_DATA",
+                ex.getMessage(),
+                ex.getResourceName(),
+                ex.getFieldName());
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST) // 400
     public ErrorResponse handleIllegalArgument(IllegalArgumentException ex) {

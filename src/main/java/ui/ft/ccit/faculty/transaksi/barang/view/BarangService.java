@@ -2,6 +2,7 @@ package ui.ft.ccit.faculty.transaksi.barang.view;
 
 import ui.ft.ccit.faculty.transaksi.DataAlreadyExistsException;
 import ui.ft.ccit.faculty.transaksi.DataNotFoundException;
+import ui.ft.ccit.faculty.transaksi.InvalidDataException;
 import ui.ft.ccit.faculty.transaksi.barang.model.Barang;
 import ui.ft.ccit.faculty.transaksi.barang.model.BarangRepository;
 
@@ -42,9 +43,7 @@ public class BarangService {
 
     // CREATE
     public Barang save(Barang barang) {
-        if (barang.getIdBarang() == null || barang.getIdBarang().isBlank()) {
-            throw new IllegalArgumentException("idBarang wajib diisi");
-        }
+        validateBarang(barang);
 
         if (barangRepository.existsById(barang.getIdBarang())) {
             throw new DataAlreadyExistsException("Barang", barang.getIdBarang());
@@ -56,9 +55,7 @@ public class BarangService {
     @Transactional
     public List<Barang> saveBulk(List<Barang> barangList) {
         for (Barang barang : barangList) {
-            if (barang.getIdBarang() == null || barang.getIdBarang().isBlank()) {
-                throw new IllegalArgumentException("idBarang wajib diisi untuk setiap barang");
-            }
+            validateBarang(barang);
 
             if (barangRepository.existsById(barang.getIdBarang())) {
                 throw new DataAlreadyExistsException("Barang", barang.getIdBarang());
@@ -70,6 +67,9 @@ public class BarangService {
     // UPDATE
     public Barang update(String id, Barang updated) {
         Barang existing = getById(id); // akan lempar DataNotFoundException
+
+        // Validasi data yang akan diupdate (skip validasi idBarang karena tidak berubah)
+        validateBarangForUpdate(updated);
 
         existing.setNama(updated.getNama());
         existing.setStok(updated.getStok());
@@ -109,5 +109,108 @@ public class BarangService {
             throw new DataNotFoundException("Barang", id);
         }
         barangRepository.deleteById(id);
+    }
+
+    // VALIDATION METHODS
+    private void validateBarang(Barang barang) {
+        // Validasi idBarang
+        if (barang.getIdBarang() == null || barang.getIdBarang().isBlank()) {
+            throw new InvalidDataException("Barang", "idBarang", "null/blank");
+        }
+        if (barang.getIdBarang().length() > 4) {
+            throw new InvalidDataException("Barang", "idBarang", barang.getIdBarang() + " (maksimal 4 karakter)");
+        }
+
+        // Validasi nama
+        if (barang.getNama() == null || barang.getNama().isBlank()) {
+            throw new InvalidDataException("Barang", "nama", "null/blank");
+        }
+        if (barang.getNama().length() > 255) {
+            throw new InvalidDataException("Barang", "nama", "terlalu panjang (maksimal 255 karakter)");
+        }
+
+        // Validasi stok
+        if (barang.getStok() == null) {
+            throw new InvalidDataException("Barang", "stok", "null");
+        }
+        if (barang.getStok() < 0) {
+            throw new InvalidDataException("Barang", "stok", String.valueOf(barang.getStok()) + " (tidak boleh negatif)");
+        }
+
+        // Validasi harga
+        if (barang.getHarga() == null) {
+            throw new InvalidDataException("Barang", "harga", "null");
+        }
+        if (barang.getHarga() < 0) {
+            throw new InvalidDataException("Barang", "harga", String.valueOf(barang.getHarga()) + " (tidak boleh negatif)");
+        }
+
+        // Validasi persenLaba
+        if (barang.getPersenLaba() == null) {
+            throw new InvalidDataException("Barang", "persenLaba", "null");
+        }
+        if (barang.getPersenLaba() < 0 || barang.getPersenLaba() > 100) {
+            throw new InvalidDataException("Barang", "persenLaba", String.valueOf(barang.getPersenLaba()) + " (harus antara 0-100)");
+        }
+
+        // Validasi diskon
+        if (barang.getDiskon() == null) {
+            barang.setDiskon(0.0); // Set default jika null
+        }
+        if (barang.getDiskon() < 0 || barang.getDiskon() > 100) {
+            throw new InvalidDataException("Barang", "diskon", String.valueOf(barang.getDiskon()) + " (harus antara 0-100)");
+        }
+
+        // Validasi idPemasok
+        if (barang.getIdPemasok() != null && barang.getIdPemasok().length() > 4) {
+            throw new InvalidDataException("Barang", "idPemasok", barang.getIdPemasok() + " (maksimal 4 karakter)");
+        }
+    }
+
+    private void validateBarangForUpdate(Barang barang) {
+        // Validasi nama
+        if (barang.getNama() == null || barang.getNama().isBlank()) {
+            throw new InvalidDataException("Barang", "nama", "null/blank");
+        }
+        if (barang.getNama().length() > 255) {
+            throw new InvalidDataException("Barang", "nama", "terlalu panjang (maksimal 255 karakter)");
+        }
+
+        // Validasi stok
+        if (barang.getStok() == null) {
+            throw new InvalidDataException("Barang", "stok", "null");
+        }
+        if (barang.getStok() < 0) {
+            throw new InvalidDataException("Barang", "stok", String.valueOf(barang.getStok()) + " (tidak boleh negatif)");
+        }
+
+        // Validasi harga
+        if (barang.getHarga() == null) {
+            throw new InvalidDataException("Barang", "harga", "null");
+        }
+        if (barang.getHarga() < 0) {
+            throw new InvalidDataException("Barang", "harga", String.valueOf(barang.getHarga()) + " (tidak boleh negatif)");
+        }
+
+        // Validasi persenLaba
+        if (barang.getPersenLaba() == null) {
+            throw new InvalidDataException("Barang", "persenLaba", "null");
+        }
+        if (barang.getPersenLaba() < 0 || barang.getPersenLaba() > 100) {
+            throw new InvalidDataException("Barang", "persenLaba", String.valueOf(barang.getPersenLaba()) + " (harus antara 0-100)");
+        }
+
+        // Validasi diskon
+        if (barang.getDiskon() == null) {
+            throw new InvalidDataException("Barang", "diskon", "null");
+        }
+        if (barang.getDiskon() < 0 || barang.getDiskon() > 100) {
+            throw new InvalidDataException("Barang", "diskon", String.valueOf(barang.getDiskon()) + " (harus antara 0-100)");
+        }
+
+        // Validasi idPemasok
+        if (barang.getIdPemasok() != null && barang.getIdPemasok().length() > 4) {
+            throw new InvalidDataException("Barang", "idPemasok", barang.getIdPemasok() + " (maksimal 4 karakter)");
+        }
     }
 }

@@ -55,7 +55,13 @@ public class OpenApiConfig {
          * ======================================================
          */
         static final List<String> ENTITIES = List.of(
-                        "barang");
+                        "barang",
+                        "jenisbarang",
+                        "pemasok",
+                        "karyawan",
+                        "pelanggan",
+                        "transaksi",
+                        "detailtransaksi");
 
         /*
          * ======================================================
