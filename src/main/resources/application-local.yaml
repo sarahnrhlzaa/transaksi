@@ -15,7 +15,7 @@ spring:
     open-in-view: false               # Optimization
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true              # Format SQL query supaya readable
         use_sql_comments: true        # Tambahin comment di SQL query
 
