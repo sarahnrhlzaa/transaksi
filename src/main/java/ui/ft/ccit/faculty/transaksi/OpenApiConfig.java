@@ -49,13 +49,16 @@ public class OpenApiConfig {
          * "barang",
          * "pemasok",
          * "pelanggan",
-         * "transaksi");
+         * "transaksi",
+         * "detail-transaksi");
          * 
          * 
          * ======================================================
          */
         static final List<String> ENTITIES = List.of(
-                        "barang");
+                        "barang",
+                        "pemasok",
+                        "detail-transaksi");
 
         /*
          * ======================================================
@@ -137,11 +140,17 @@ public class OpenApiConfig {
 
                 GET_ALL("GET", "/api/{resource}"),
                 GET_ONE("GET", "/api/{resource}/{id}"),
+                GET_ONE_COMPOSITE("GET", "/api/{resource}/{id1}/{id2}"),
+                GET_BY_PARENT("GET", "/api/{resource}/transaksi/{id}"),
+                GET_BY_ITEM("GET", "/api/{resource}/barang/{id}"),
                 SEARCH("GET", "/api/{resource}/search"),
                 CREATE("POST", "/api/{resource}"),
                 BULK_CREATE("POST", "/api/{resource}/bulk"),
                 UPDATE("PUT", "/api/{resource}/{id}"),
+                UPDATE_COMPOSITE("PUT", "/api/{resource}/{id1}/{id2}"),
                 DELETE("DELETE", "/api/{resource}/{id}"),
+                DELETE_COMPOSITE("DELETE", "/api/{resource}/{id1}/{id2}"),
+                DELETE_BY_PARENT("DELETE", "/api/{resource}/transaksi/{id}"),
                 BULK_DELETE("DELETE", "/api/{resource}/bulk");
 
                 private final String method;
@@ -155,22 +164,59 @@ public class OpenApiConfig {
                 static EndpointDoc match(String resource, String method, String path) {
                         for (EndpointDoc doc : values()) {
                                 String expected = doc.pathPattern.replace("{resource}", resource);
-                                if (doc.method.equals(method) && expected.equals(path)) {
+                                if (doc.method.equals(method) && pathMatches(expected, path)) {
                                         return doc;
                                 }
                         }
                         return null;
                 }
 
+                private static boolean pathMatches(String pattern, String path) {
+                        // Exact match
+                        if (pattern.equals(path)) {
+                                return true;
+                        }
+                        
+                        // Pattern with path variables
+                        String[] patternParts = pattern.split("/");
+                        String[] pathParts = path.split("/");
+                        
+                        if (patternParts.length != pathParts.length) {
+                                return false;
+                        }
+                        
+                        for (int i = 0; i < patternParts.length; i++) {
+                                String patternPart = patternParts[i];
+                                String pathPart = pathParts[i];
+                                
+                                // Skip path variable placeholders
+                                if (patternPart.startsWith("{") && patternPart.endsWith("}")) {
+                                        continue;
+                                }
+                                
+                                if (!patternPart.equals(pathPart)) {
+                                        return false;
+                                }
+                        }
+                        
+                        return true;
+                }
+
                 String summary(String resource) {
                         return switch (this) {
                                 case GET_ALL -> "Mengambil daftar semua " + resource;
                                 case GET_ONE -> "Mengambil detail satu " + resource;
+                                case GET_ONE_COMPOSITE -> "Mengambil detail satu " + resource + " (composite key)";
+                                case GET_BY_PARENT -> "Mengambil " + resource + " berdasarkan transaksi";
+                                case GET_BY_ITEM -> "Mengambil " + resource + " berdasarkan barang";
                                 case SEARCH -> "Mencari " + resource;
                                 case CREATE -> "Membuat " + resource + " baru";
                                 case BULK_CREATE -> "Membuat " + resource + " secara bulk";
                                 case UPDATE -> "Memperbarui " + resource;
+                                case UPDATE_COMPOSITE -> "Memperbarui " + resource + " (composite key)";
                                 case DELETE -> "Menghapus " + resource;
+                                case DELETE_COMPOSITE -> "Menghapus " + resource + " (composite key)";
+                                case DELETE_BY_PARENT -> "Menghapus semua " + resource + " berdasarkan transaksi";
                                 case BULK_DELETE -> "Menghapus " + resource + " secara bulk";
                         };
                 }
@@ -178,21 +224,33 @@ public class OpenApiConfig {
                 String description(String resource) {
                         return switch (this) {
                                 case GET_ALL ->
-                                        "Mengambil seluruh data " + resource + " yang tersedia di sistem.";
+                                        "Mengambil seluruh data " + resource + " yang tersedia di sistem. Mendukung pagination dengan parameter 'page' dan 'size'.";
                                 case GET_ONE ->
                                         "Mengambil detail satu " + resource + " berdasarkan ID.";
+                                case GET_ONE_COMPOSITE ->
+                                        "Mengambil detail satu " + resource + " berdasarkan composite key (kode transaksi dan ID barang).";
+                                case GET_BY_PARENT ->
+                                        "Mengambil semua " + resource + " yang terkait dengan kode transaksi tertentu.";
+                                case GET_BY_ITEM ->
+                                        "Mengambil semua " + resource + " yang terkait dengan ID barang tertentu.";
                                 case SEARCH ->
-                                        "Mencari " + resource + " berdasarkan kata kunci tertentu.";
+                                        "Mencari " + resource + " berdasarkan kata kunci tertentu. Gunakan parameter 'q' untuk query.";
                                 case CREATE ->
                                         "Membuat satu data " + resource + " baru di sistem.";
                                 case BULK_CREATE ->
-                                        "Membuat banyak data " + resource + " dalam satu transaksi.";
+                                        "Membuat banyak data " + resource + " dalam satu transaksi. Maksimal 100 data per request.";
                                 case UPDATE ->
                                         "Memperbarui data " + resource + " berdasarkan ID.";
+                                case UPDATE_COMPOSITE ->
+                                        "Memperbarui data " + resource + " berdasarkan composite key (kode transaksi dan ID barang).";
                                 case DELETE ->
                                         "Menghapus satu data " + resource + " berdasarkan ID.";
+                                case DELETE_COMPOSITE ->
+                                        "Menghapus satu data " + resource + " berdasarkan composite key (kode transaksi dan ID barang).";
+                                case DELETE_BY_PARENT ->
+                                        "Menghapus semua data " + resource + " yang terkait dengan kode transaksi tertentu.";
                                 case BULK_DELETE ->
-                                        "Menghapus banyak data " + resource + " berdasarkan daftar ID.";
+                                        "Menghapus banyak data " + resource + " berdasarkan daftar ID. Maksimal 100 data per request.";
                         };
                 }
         }

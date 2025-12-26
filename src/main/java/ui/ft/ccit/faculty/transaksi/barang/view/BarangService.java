@@ -2,6 +2,7 @@ package ui.ft.ccit.faculty.transaksi.barang.view;
 
 import ui.ft.ccit.faculty.transaksi.DataAlreadyExistsException;
 import ui.ft.ccit.faculty.transaksi.DataNotFoundException;
+import ui.ft.ccit.faculty.transaksi.InvalidDataException;
 import ui.ft.ccit.faculty.transaksi.barang.model.Barang;
 import ui.ft.ccit.faculty.transaksi.barang.model.BarangRepository;
 
@@ -43,7 +44,7 @@ public class BarangService {
     // CREATE
     public Barang save(Barang barang) {
         if (barang.getIdBarang() == null || barang.getIdBarang().isBlank()) {
-            throw new IllegalArgumentException("idBarang wajib diisi");
+            throw new InvalidDataException("idBarang", "wajib diisi");
         }
 
         if (barangRepository.existsById(barang.getIdBarang())) {
@@ -57,7 +58,7 @@ public class BarangService {
     public List<Barang> saveBulk(List<Barang> barangList) {
         for (Barang barang : barangList) {
             if (barang.getIdBarang() == null || barang.getIdBarang().isBlank()) {
-                throw new IllegalArgumentException("idBarang wajib diisi untuk setiap barang");
+                throw new InvalidDataException("idBarang", "wajib diisi untuk setiap barang");
             }
 
             if (barangRepository.existsById(barang.getIdBarang())) {
@@ -87,12 +88,12 @@ public class BarangService {
     public void deleteBulk(List<String> ids) {
 
         if (ids == null || ids.isEmpty()) {
-            throw new IllegalArgumentException("List ID tidak boleh kosong");
+            throw new InvalidDataException("ids", "List ID tidak boleh kosong");
         }
 
         // hard limit untuk keamanan
         if (ids.size() > 100) {
-            throw new IllegalArgumentException("Maksimal 100 data per bulk delete");
+            throw new InvalidDataException("ids", "Maksimal 100 data per bulk delete");
         }
 
         // validasi: pastikan semua ID ada
