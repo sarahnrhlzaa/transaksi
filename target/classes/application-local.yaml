@@ -22,7 +22,7 @@ spring:
 # Logging untuk development
 logging:
   level:
-    "ui.ft.ccit.faculty.transaksi": DEBUG
-    "org.springframework.web": DEBUG
-    "org.hibernate.SQL": DEBUG
-    "org.hibernate.type.descriptor.sql.BasicBinder": TRACE
+    ui.ft.ccit.faculty.transaksi: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
