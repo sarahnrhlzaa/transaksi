@@ -24,14 +24,31 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/**").authenticated()
 
-                        // Endpoint umum tanpa auth
+                        // ========== Swagger & Documentation (PUBLIK) ==========
+                        .requestMatchers(
+                            "/swagger-ui/**",           // Swagger UI
+                            "/swagger-ui.html",         // Swagger UI HTML
+                            "/v3/api-docs/**",          // OpenAPI docs
+                            "/api-docs/**",             // API docs
+                            "/swagger-resources/**",    // Swagger resources
+                            "/webjars/**"               // WebJars (dependencies Swagger)
+                        ).permitAll()
+
+                        // ========== H2 Console & Explorer (Development Only) ==========
+                        .requestMatchers("/h2-console/**").permitAll()
+                        .requestMatchers("/explorer/**").permitAll()
+
+                        // ========== Endpoint umum tanpa auth ==========
                         .requestMatchers("/", "/error", "/actuator/health").permitAll()
 
-                        // Selain yang di atas → butuh auth
+                        // ========== Selain yang di atas → butuh auth ==========
                         .anyRequest().authenticated())
 
                 // Resource server JWT (tanpa form login, tanpa redirect Google)
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+                
+                // Allow frames for H2 Console (if using H2 database)
+                .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
 
         return http.build();
     }

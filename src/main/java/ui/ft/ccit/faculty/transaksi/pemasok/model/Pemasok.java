@@ -10,25 +10,32 @@ public class Pemasok {
     @Column(name = "id_pemasok", length = 4)
     private String idPemasok;
 
-    @Column(name = "nama", length = 255)
-    private String namaPemasok;
+    @Column(name = "nama", length = 20, nullable = false)
+    private String nama;
 
-    @Column(name = "alamat", length = 255)
+    @Column(name = "alamat", length = 50, nullable = false)
     private String alamat;
 
-    @Column(name = "telepon", length = 255)
+    @Column(name = "telepon", length = 15, nullable = false)
     private String telepon;
 
-    @Column(name = "email", length = 255)
+    @Column(name = "email", length = 40)
     private String email;
 
     protected Pemasok() {
         // untuk JPA
     }
 
-    public Pemasok(String idPemasok, String namaPemasok, String alamat, String telepon, String email) {
+    public Pemasok(String idPemasok, String nama, String alamat, String telepon) {
         this.idPemasok = idPemasok;
-        this.namaPemasok = namaPemasok;
+        this.nama = nama;
+        this.alamat = alamat;
+        this.telepon = telepon;
+    }
+
+    public Pemasok(String idPemasok, String nama, String alamat, String telepon, String email) {
+        this.idPemasok = idPemasok;
+        this.nama = nama;
         this.alamat = alamat;
         this.telepon = telepon;
         this.email = email;
@@ -44,12 +51,12 @@ public class Pemasok {
         this.idPemasok = idPemasok;
     }
 
-    public String getNamaPemasok() {
-        return namaPemasok;
+    public String getNama() {
+        return nama;
     }
 
-    public void setNamaPemasok(String namaPemasok) {
-        this.namaPemasok = namaPemasok;
+    public void setNama(String nama) {
+        this.nama = nama;
     }
 
     public String getAlamat() {

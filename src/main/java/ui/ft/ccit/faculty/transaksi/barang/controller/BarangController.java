@@ -1,5 +1,6 @@
 package ui.ft.ccit.faculty.transaksi.barang.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import ui.ft.ccit.faculty.transaksi.barang.model.Barang;
@@ -19,8 +20,18 @@ public class BarangController {
 
     // GET list semua barang
     @GetMapping
-    public List<Barang> list() {
-        return service.getAll();
+    public List<Barang> list(
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
+        // TANPA pagination
+        if (page == null && size == null) {
+            return service.getAll();
+        }
+
+        // DENGAN pagination
+        int p = (page != null && page >= 0) ? page : 0;
+        int s = (size != null && size > 0) ? size : 5;
+        return service.getAllWithPagination(p, s);
     }
 
     // GET satu barang by id
@@ -37,14 +48,28 @@ public class BarangController {
 
     // POST - create barang baru
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Barang create(@RequestBody Barang barang) {
         return service.save(barang);
+    }
+
+    // POST - create barang bulk baru
+    @PostMapping("/bulk")
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<Barang> createBulk(@RequestBody List<Barang> barang) {
+        return service.saveBulk(barang);
     }
 
     // PUT - edit/update barang
     @PutMapping("/{id}")
     public Barang update(@PathVariable String id, @RequestBody Barang barang) {
         return service.update(id, barang);
+    }
+
+    // DELETE - hapus multiple barang
+    @DeleteMapping("/bulk")
+    public void deleteBulk(@RequestBody List<String> ids) {
+        service.deleteBulk(ids);
     }
 
     // DELETE - hapus barang

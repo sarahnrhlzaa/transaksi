@@ -13,3 +13,9 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: https://accounts.google.com
+          
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true

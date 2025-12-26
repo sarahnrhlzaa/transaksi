@@ -11,4 +11,7 @@ public interface BarangRepository extends JpaRepository<Barang, String> {
 
     // contoh lain: barang dengan stok kurang dari angka tertentu
     List<Barang> findByStokLessThan(Integer stok);
+
+    // hitung berapa banyak barang dengan idBarang dalam daftar tertentu
+    long countByIdBarangIn(List<String> idBarangList);
 }

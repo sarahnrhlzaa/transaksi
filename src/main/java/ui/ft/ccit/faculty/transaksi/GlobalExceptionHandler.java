@@ -31,11 +31,31 @@ public class GlobalExceptionHandler {
                 ex.getIdValue());
     }
 
+    @ExceptionHandler(InvalidDataException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST) // 400
+    public ErrorResponse handleInvalidData(InvalidDataException ex) {
+        return new ErrorResponse(
+                "INVALID_DATA",
+                ex.getMessage(),
+                ex.getField(),
+                null);
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST) // 400
     public ErrorResponse handleIllegalArgument(IllegalArgumentException ex) {
         return new ErrorResponse(
                 "BAD_REQUEST",
+                ex.getMessage(),
+                null,
+                null);
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    @ResponseStatus(HttpStatus.CONFLICT) // 409
+    public ErrorResponse handleIllegalState(IllegalStateException ex) {
+        return new ErrorResponse(
+                "CONFLICT",
                 ex.getMessage(),
                 null,
                 null);
