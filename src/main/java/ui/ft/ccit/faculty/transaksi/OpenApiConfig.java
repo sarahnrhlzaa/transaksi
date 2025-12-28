@@ -36,10 +36,10 @@ public class OpenApiConfig {
                                                                 - Swagger hanya sebagai dokumentasi manusia
                                                                         """)
                                                 .contact(new Contact()
-                                                                .name("Muhammad Azka Ramadhan")
-                                                                .email("m.azka@eng.ui.ac.id")));
-        }
-
+                                                                .name("Sarah Nurhaliza")
+                                                                .email("sarahnrhlza3rut@gmail.com")
+                                                                .url("https://github.com/sarahnrhlzaa/transaksi.git")));
+                                                                }
         /*
          * ======================================================
          * ENTITY REGISTRY (1 BARIS = 1 TABEL)
