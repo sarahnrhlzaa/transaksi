@@ -36,8 +36,9 @@ public class OpenApiConfig {
                                                                 - Swagger hanya sebagai dokumentasi manusia
                                                                         """)
                                                 .contact(new Contact()
-                                                                .name("Muhammad Azka Ramadhan")
-                                                                .email("m.azka@eng.ui.ac.id")));
+                                                                .name("Sarah Nurhaliza")
+                                                                .email("sarahnrhlza3rut@gmail.com")
+                                                                .url("https://github.com/sarahnrhlzaa/transaksi.git")));
         }
 
         /*
@@ -58,6 +59,10 @@ public class OpenApiConfig {
         static final List<String> ENTITIES = List.of(
                         "barang",
                         "pemasok",
+                        "jenis-barang",
+                        "karyawan",
+                        "pelanggan",
+                        "transaksi",
                         "detail-transaksi");
 
         /*
